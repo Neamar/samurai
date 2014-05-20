@@ -28,10 +28,12 @@ class Plot(models.Model):
 class Personne(models.Model):
 	HOMME = 'm'
 	FEMME = 'f'
+	INCONNU = '?'
 
 	SEX_CHOICES = (
 		(HOMME, '♂'),
-		(FEMME, '♀')
+		(FEMME, '♀'),
+		(INCONNU, '?')
 	)
 
 	nom = models.CharField(max_length=100)

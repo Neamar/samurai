@@ -34,7 +34,6 @@ class Personne(models.Model):
 		(FEMME, '♀')
 	)
 
-
 	nom = models.CharField(max_length=100)
 	sexe = models.CharField(max_length=1, choices=SEX_CHOICES, default=HOMME)
 	avatar = models.ImageField(upload_to="avatar")

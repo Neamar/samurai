@@ -1,4 +1,4 @@
 Samurai
 ========
 
-Simple database pour la représentation d'arbre généalogiques.
+Simple database pour représenter des relations et liens entre personnes et lieux.

@@ -19,8 +19,15 @@ class PersoAdmin(admin.ModelAdmin):
     save_on_top = True
     search_fields = ('nom', 'clan__nom')
     ordering = ("nom",)
+    list_display = ('nom', 'sexe', 'clan', 'img')
 
-
+    def img(self, perso):
+        if perso.avatar:
+            return u"<img src=\"/media/%s\" />" % perso.avatar
+        else:
+            return False
+    img.description = "Avatar"
+    img.allow_tags = True
 @admin.register(Clan)
 class ClanAdmin(admin.ModelAdmin):
     ordering = ("nom",)

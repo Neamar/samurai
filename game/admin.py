@@ -18,6 +18,7 @@ class PersoAdmin(admin.ModelAdmin):
     list_max_show_all = 5000
     save_on_top = True
     search_fields = ('nom', 'clan__nom')
+    ordering = ("nom",)
 
 admin.site.register(Clan)
 admin.site.register(Lieu)

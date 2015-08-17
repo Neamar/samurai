@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from game.models import Perso, Clan, Lieu, Culture, Religion
+from game.models import Perso, Clan, Lieu
 
 
 @admin.register(Perso)
@@ -21,5 +21,3 @@ class PersoAdmin(admin.ModelAdmin):
 
 admin.site.register(Clan)
 admin.site.register(Lieu)
-admin.site.register(Culture)
-admin.site.register(Religion)

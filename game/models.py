@@ -4,6 +4,9 @@ from django.utils.encoding import python_2_unicode_compatible
 
 @python_2_unicode_compatible
 class Perso(models.Model):
+    class Meta:
+        ordering = ['nom']
+
     HOMME = "H"
     FEMME = "F"
     SEXE_CHOICES = (
@@ -49,6 +52,9 @@ class Perso(models.Model):
 
 @python_2_unicode_compatible
 class Clan(models.Model):
+    class Meta:
+        ordering = ['nom']
+
     nom = models.CharField(unique=True, max_length=200)
     avatar = models.ImageField(blank=True, null=True)
     leader = models.ForeignKey("Perso", related_name="+", blank=True, null=True)
@@ -64,6 +70,7 @@ class Clan(models.Model):
 class Lieu(models.Model):
     class Meta:
         verbose_name_plural = "lieux"
+        ordering = ['nom']
 
     nom = models.CharField(unique=True, max_length=200, blank=True, null=True)
     type = models.CharField(max_length=200, blank=True, null=True)

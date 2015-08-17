@@ -20,5 +20,12 @@ class PersoAdmin(admin.ModelAdmin):
     search_fields = ('nom', 'clan__nom')
     ordering = ("nom",)
 
-admin.site.register(Clan)
-admin.site.register(Lieu)
+
+@admin.register(Clan)
+class ClanAdmin(admin.ModelAdmin):
+    ordering = ("nom",)
+
+
+@admin.register(Lieu)
+class LieuAdmin(admin.ModelAdmin):
+    ordering = ("nom",)

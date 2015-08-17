@@ -17,7 +17,7 @@ class PersoAdmin(admin.ModelAdmin):
     list_filter = ('sexe', 'clan', 'factions', 'culture', 'residence')
     list_max_show_all = 5000
     save_on_top = True
-    search_fields = ('name', 'clan__name')
+    search_fields = ('nom', 'clan__nom')
 
 admin.site.register(Clan)
 admin.site.register(Lieu)

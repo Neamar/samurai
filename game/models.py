@@ -1,6 +1,8 @@
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 
 
+@python_2_unicode_compatible
 class Perso(models.Model):
     HOMME = "H"
     FEMME = "F"
@@ -41,10 +43,11 @@ class Perso(models.Model):
     description = models.TextField(blank=True, null=True)
     factions = models.ManyToManyField("Clan", related_name="+", blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nom
 
 
+@python_2_unicode_compatible
 class Clan(models.Model):
     nom = models.CharField(unique=True, max_length=200)
     avatar = models.ImageField(blank=True, null=True)
@@ -53,10 +56,11 @@ class Clan(models.Model):
     description = models.TextField(blank=True, null=True)
     tresorerie = models.IntegerField(default=0)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nom
 
 
+@python_2_unicode_compatible
 class Lieu(models.Model):
     class Meta:
         verbose_name_plural = "lieux"
@@ -70,5 +74,5 @@ class Lieu(models.Model):
     clan = models.ForeignKey("Clan", blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nom

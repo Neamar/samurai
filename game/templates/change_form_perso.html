@@ -24,6 +24,7 @@
 {% endif %}
 
 {% load id_perso %}
+{% load id_lieu %}
 
 {% block content %}
 <fieldset class="module">
@@ -56,8 +57,9 @@
 
 <div style="clear:both"></div>
 
-<h1>{{ original.residence.nom }}</h1>
-<img src="/media/{{ original.residence.image }}" style="float:left; margin: 0 25px"/>
+<div style="float: left;">
+{% id_lieu original.residence %}
+</div>
 
 <p>{{ original.occupation }}</p>
 
@@ -73,12 +75,12 @@
 
 <div style="clear:both"></div>
 <h5>Conjoint</h5>
-{% if perso.sexe == "M" %}
-{% id_perso original.femme %}
+{% if original.sexe == "H" %}
+    {% id_perso original.femme %}
 {% else %}
-{% for mari in original.mari %}
-{% id_perso mari %}
-{% endfor %}
+    {% for mari in original.mari %}
+    {% id_perso mari %}
+    {% endfor %}
 {% endif %}
 <div style="clear:both"></div>
 <h5>Enfants</h5>

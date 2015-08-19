@@ -49,6 +49,15 @@ class Perso(models.Model):
     def __str__(self):
         return self.nom
 
+    def enfants(self):
+        return Perso.objects.filter(pere=self).order_by('naissance')
+
+    def siblings(self):
+        return Perso.objects.filter(pere=self.pere).exclude(id=self.pk).order_by('naissance')
+
+    def vassaux(self):
+        return Perso.objects.filter(suzerain=self).order_by('-rang')
+
 
 @python_2_unicode_compatible
 class Clan(models.Model):

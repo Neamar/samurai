@@ -48,6 +48,7 @@ class ClanAdmin(admin.ModelAdmin):
 
 @admin.register(Lieu)
 class LieuAdmin(admin.ModelAdmin):
+    search_fields = ('nom',)
     list_display = ('nom', 'img')
 
     def img(self, lieu):

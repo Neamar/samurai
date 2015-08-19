@@ -1,4 +1,6 @@
-<div class="id_perso" style="float:left;">
-    <h1><small>{{ perso.nom }}, {{ perso.sexe }}<small>, {{ perso.position }}</small></small></h1>
-    <img src="/media/{{ perso.avatar }}" style="float:left; margin: 0 25px"/>
-</div>
+{% if perso %}
+    <div class="id_perso" style="float:left; border: 1px solid gray; margin: 0 10px; padding: 0 10px; width: 400px">
+        <h1><small><a href="/admin/game/perso/{{ perso.pk }}">{{ perso.nom }}</a>, {{ perso.sexe }}<small>{% if perso.position %}, {{ perso.position }}{% endif %}</small></small></h1>
+        {% if perso.avatar %}<img src="/media/{{ perso.avatar }}" style="margin: 0 25px"/>{% endif %}
+    </div>
+{% endif %}

@@ -15,7 +15,7 @@
 {% if not is_popup %}
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-<a href="{% url 'admin:index' %}">{% trans 'Home' %} FOQUE FOQUE</a>
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
 &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
 &rsaquo; {% if has_change_permission %}<a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %}
 &rsaquo; {% if add %}{% trans 'Add' %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
@@ -65,6 +65,40 @@
 <p>{{ original.description }}
 
 <hr />
+{% if original.pere %}
+<h5>Père, mère</h5>
+{% id_perso original.pere %}
+{% id_perso original.pere.femme %}
+{% endif %}
+
+<div style="clear:both"></div>
+<h5>Conjoint</h5>
+{% id_perso original.femme %}
+
+<div style="clear:both"></div>
+<h5>Enfants</h5>
+{% for enfant in original.enfants %}
+{% id_perso enfant %}
+{% endfor %}
+
+<div style="clear:both"></div>
+<h5>Frères et sœurs</h5>
+{% for enfant in original.siblings %}
+{% id_perso enfant %}
+{% endfor %}
+
+<hr />
+
+<div style="clear:both"></div>
+<h5>Suzerain</h5>
+{% id_perso original.suzerain %}
+
+<div style="clear:both"></div>
+<h5>Vassaux</h5>
+{% for vassal in original.vassaux %}
+{% id_perso vassal %}
+{% endfor %}
+
 
 </fieldset>
 <div id="content-main">

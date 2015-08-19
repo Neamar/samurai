@@ -23,6 +23,8 @@
 {% endblock %}
 {% endif %}
 
+{% load id_perso %}
+
 {% block content %}
 <fieldset class="module">
 <h1>{{ original.nom }}, {{ original.sexe }}<small>, {{ original.position }}</small></h1>
@@ -53,9 +55,16 @@
 </table>
 
 <div style="clear:both"></div>
-<img src="/media/{{ original.avatar }}" style="float:left; margin: 0 25px"/>
 
 <h1>{{ original.residence.nom }}</h1>
+<img src="/media/{{ original.residence.image }}" style="float:left; margin: 0 25px"/>
+
+<p>{{ original.occupation }}</p>
+
+<div style="clear:both"></div>
+<p>{{ original.description }}
+
+<hr />
 
 </fieldset>
 <div id="content-main">

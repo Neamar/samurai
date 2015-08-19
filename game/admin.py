@@ -30,6 +30,7 @@ class PersoAdmin(admin.ModelAdmin):
     img.description = "Avatar"
     img.allow_tags = True
 
+
 @admin.register(Clan)
 class ClanAdmin(admin.ModelAdmin):
     list_display = ('nom', 'img')
@@ -50,7 +51,7 @@ class LieuAdmin(admin.ModelAdmin):
     list_display = ('nom', 'img')
 
     def img(self, lieu):
-        if lieu.avatar:
+        if lieu.image:
             return u"<img src=\"/media/%s\" />" % lieu.image
         else:
             return False

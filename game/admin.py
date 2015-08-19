@@ -15,7 +15,13 @@ class PersoAdmin(admin.ModelAdmin):
     #         'fields': ('notes_mj',)
     #     }),
     # )
-    list_filter = ('sexe', 'clan', 'factions', 'culture', 'residence')
+    list_filter = (
+        'sexe',
+        ('clan', admin.RelatedOnlyFieldListFilter),
+        ('clan_origine', admin.RelatedOnlyFieldListFilter),
+        ('culture', admin.RelatedOnlyFieldListFilter),
+        ('residence', admin.RelatedOnlyFieldListFilter)
+    )
     list_max_show_all = 5000
     save_on_top = True
     search_fields = ('nom', 'clan__nom')
@@ -33,6 +39,7 @@ class PersoAdmin(admin.ModelAdmin):
 
 @admin.register(Clan)
 class ClanAdmin(admin.ModelAdmin):
+    change_form_template = 'change_form_clan.html'
     list_display = ('nom', 'img')
 
     def img(self, clan):

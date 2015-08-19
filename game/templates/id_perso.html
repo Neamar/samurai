@@ -9,8 +9,8 @@
             <img src="/media/{{ perso.avatar }}" />
         {% endif %}
         {% if perso.residence %}
-            <a href="/admin/game/clan/{{ perso.residence.clan.pk }}"><img src="/media/{{ perso.residence.clan.avatar }}" width="24" height="24" style="position: absolute;" title="{{perso.clan_origine.nom }}"/></a>
-            <img src="/media/{{ perso.residence.image }}" />
+            <a href="/admin/game/clan/{{ perso.residence.clan.pk }}"><img src="/media/{{ perso.residence.clan.avatar }}" width="24" height="24" style="position: absolute;" title="{{perso.residence.clan.nom }}"/></a>
+            <img src="/media/{{ perso.residence.image }}" title="{{ perso.residence.nom }}"/>
         {% endif %}
 
     </div>

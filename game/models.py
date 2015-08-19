@@ -22,12 +22,14 @@ class Perso(models.Model):
         "self",
         blank=True,
         null=True,
+        limit_choices_to={"sexe": HOMME}
     )
     femme = models.ForeignKey(
         "self",
         related_name="+",
         blank=True,
         null=True,
+        limit_choices_to={'sexe': FEMME}
     )
 
     rang = models.CharField(max_length=200, blank=True, null=True)
@@ -77,6 +79,15 @@ class Clan(models.Model):
 
     def __str__(self):
         return self.nom
+
+    def membres(self):
+        return Perso.objects.filter(clan=self).order_by('-rang', '-age')
+
+    def expat(self):
+        return Perso.objects.filter(clan_origine=self).exclude(clan=self).order_by('-rang', '-age')
+
+    def lieux(self):
+        return Lieu.objects.filter(clan=self)
 
 
 @python_2_unicode_compatible

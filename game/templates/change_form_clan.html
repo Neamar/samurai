@@ -30,43 +30,26 @@
 <fieldset class="module">
 <h1>{{ original.nom }}</h1>
 
-{% if original.image_large %}
-    <img src="/media/{{ original.image_large }}"/>
-{% else %}
-    <img src="/media/{{ original.image }}"/>
-{% endif %}
-
-<table>
-<tr>
-    <td>Clan</td>
-    <td>{{ original.clan.avatar }}</td>
-    <td>{{ original.clan.nom }}</td>
-</tr>
-</table>
-
-<p>{{ original.description }}
+<img src="/media/{{ original.avatar }}"/>
 
 <hr />
-{% if original.lieu %}
-<h5>Se situe</h5>
-{% id_lieu original.lieu %}
-{% endif %}
-
 <div style="clear:both"></div>
-<h5>On y trouve</h5>
-{% for lieu in original.sub_lieu %}
-{% id_lieu lieu %}
+<h5>Membres</h5>
+{% for perso in original.membres %}
+{% id_perso perso %}
 {% endfor %}
 
 <div style="clear:both"></div>
-<hr />
-<h5>Chef</h5>
-{% id_perso original.chef %}
+<h5>Expatriés</h5>
+{% for perso in original.expat %}
+{% id_perso perso %}
+{% endfor %}
+
 
 <div style="clear:both"></div>
-<h5>Résidents</h5>
-{% for perso in original.residents %}
-{% id_perso perso %}
+<h5>Lieux</h5>
+{% for lieu in original.lieux %}
+{% id_lieu lieu %}
 {% endfor %}
 </fieldset>
 <div id="content-main">

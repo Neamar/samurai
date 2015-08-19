@@ -24,87 +24,45 @@
 {% endif %}
 
 {% load id_perso %}
+{% load id_lieu %}
 
 {% block content %}
 <fieldset class="module">
-<h1>{{ original.nom }}, {{ original.sexe }}<small>, {{ original.position }}</small></h1>
+<h1>{{ original.nom }}</h1>
 
-<img src="/media/{{ original.avatar }}" style="float:left; margin: 0 25px"/>
-<p style="float: left">
-    Âge : {{ original.age }}<br />
-    Rang : {{ original.rang }}<br />
-    Naissance : {{ original.naissance }}<br />
-</p>
-
+<img src="/media/{{ original.image }}"/>
 <table>
 <tr>
     <td>Clan</td>
-    <td><img src="/media/{{ original.clan.avatar }}" width="24" height="24" /></td>
+    <td>{{ original.clan.avatar }}</td>
     <td>{{ original.clan.nom }}</td>
-</tr>
-<tr>
-    <td>Clan d'origine</td>
-    <td><img src="/media/{{ original.clan_origine.avatar }}" width="24" height="24" /></td>
-    <td>{{ original.clan_origine.nom }}</td>
-</tr>
-<tr>
-    <td>Culture</td>
-    <td><img src="/media/{{ original.culture.avatar }}" width="24" height="24" /></td>
-    <td>{{ original.culture.nom }}</td>
 </tr>
 </table>
 
-<div style="clear:both"></div>
-
-<h1>{{ original.residence.nom }}</h1>
-<img src="/media/{{ original.residence.image }}" style="float:left; margin: 0 25px"/>
-
-<p>{{ original.occupation }}</p>
-
-<div style="clear:both"></div>
 <p>{{ original.description }}
 
 <hr />
-{% if original.pere %}
-<h5>Père, mère</h5>
-{% id_perso original.pere %}
-{% id_perso original.pere.femme %}
+{% if original.lieu %}
+<h5>Se situe</h5>
+{% id_lieu original.lieu %}
 {% endif %}
 
 <div style="clear:both"></div>
-<h5>Conjoint</h5>
-{% if perso.sexe == "M" %}
-{% id_perso original.femme %}
-{% else %}
-{% for mari in original.mari %}
-{% id_perso mari %}
-{% endfor %}
-{% endif %}
-<div style="clear:both"></div>
-<h5>Enfants</h5>
-{% for enfant in original.enfants %}
-{% id_perso enfant %}
+<h5>On y trouve</h5>
+{% for lieu in original.sub_lieu %}
+{% id_lieu lieu %}
 {% endfor %}
 
 <div style="clear:both"></div>
-<h5>Frères et sœurs</h5>
-{% for enfant in original.siblings %}
-{% id_perso enfant %}
-{% endfor %}
-
 <hr />
+<h5>Chef</h5>
+{% id_perso original.chef %}
 
 <div style="clear:both"></div>
-<h5>Suzerain</h5>
-{% id_perso original.suzerain %}
-
-<div style="clear:both"></div>
-<h5>Vassaux</h5>
-{% for vassal in original.vassaux %}
-{% id_perso vassal %}
+<h5>Résidents</h5>
+{% for perso in original.residents %}
+{% id_perso perso %}
 {% endfor %}
-
-
 </fieldset>
 <div id="content-main">
 {% block object-tools %}

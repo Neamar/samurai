@@ -22,14 +22,12 @@ class Perso(models.Model):
         "self",
         blank=True,
         null=True,
-        limit_choices_to={"sexe": HOMME}
     )
     femme = models.ForeignKey(
         "self",
         related_name="+",
         blank=True,
         null=True,
-        limit_choices_to={'sexe': FEMME}
     )
 
     rang = models.CharField(max_length=200, blank=True, null=True)
@@ -49,14 +47,20 @@ class Perso(models.Model):
     def __str__(self):
         return self.nom
 
+    def mari(self):
+        return Perso.objects.filter(femme=self)
+
     def enfants(self):
         return Perso.objects.filter(pere=self).order_by('naissance')
 
     def siblings(self):
+        if not self.pere:
+            return []
+
         return Perso.objects.filter(pere=self.pere).exclude(id=self.pk).order_by('naissance')
 
     def vassaux(self):
-        return Perso.objects.filter(suzerain=self).order_by('-rang')
+        return Perso.objects.filter(suzerain=self).order_by('-rang', '-age')
 
 
 @python_2_unicode_compatible
@@ -93,3 +97,9 @@ class Lieu(models.Model):
 
     def __str__(self):
         return self.nom
+
+    def sub_lieu(self):
+        return Lieu.objects.filter(lieu=self)
+
+    def residents(self):
+        return Perso.objects.filter(residence=self).order_by('-rang', '-age')

@@ -48,6 +48,8 @@ class ClanAdmin(admin.ModelAdmin):
 
 @admin.register(Lieu)
 class LieuAdmin(admin.ModelAdmin):
+    change_form_template = 'change_form_lieu.html'
+
     search_fields = ('nom',)
     list_display = ('nom', 'img')
 

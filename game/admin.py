@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from game.models import Perso, Clan, Lieu
+from game.models import Perso, Clan, Lieu, Change
 
 
 @admin.register(Perso)
@@ -69,3 +69,11 @@ class LieuAdmin(admin.ModelAdmin):
     img.allow_tags = True
 
     ordering = ("nom",)
+
+
+@admin.register(Change)
+class ChangeAdmin(admin.ModelAdmin):
+    search_fields = ('perso__nom, description',)
+    list_display = ('perso', 'description')
+
+    ordering = ("-date",)

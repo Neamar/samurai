@@ -39,6 +39,10 @@ class PersoAdmin(admin.ModelAdmin):
 
 @admin.register(Clan)
 class ClanAdmin(admin.ModelAdmin):
+    list_filter = (
+        ('culture', admin.RelatedOnlyFieldListFilter),
+    )
+
     change_form_template = 'change_form_clan.html'
     list_display = ('nom', 'img')
 
@@ -69,6 +73,7 @@ class LieuAdmin(admin.ModelAdmin):
     img.allow_tags = True
 
     ordering = ("nom",)
+
 
 
 @admin.register(Change)

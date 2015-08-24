@@ -32,20 +32,39 @@
 
 <img src="/media/{{ original.avatar }}"/>
 
+<fieldset>
+<h5>Leader</h5>
+{% id_perso original.leader %}
+</fieldset>
+
 <hr />
 <div style="clear:both"></div>
+<fieldset>
 <h5>Membres</h5>
 {% for perso in original.membres %}
 {% id_perso perso %}
 {% endfor %}
+</fieldset>
 
 <div style="clear:both"></div>
+<fieldset>
 <h5>Expatriés</h5>
 {% for perso in original.expat %}
 {% id_perso perso %}
 {% endfor %}
+</fieldset>
+<div style="clear:both"></div>
 
-
+{% with original.culture as culturistes %}
+{% if culturistes|length > 0 %}
+<fieldset>
+<h5>Dans la culture ({{ culturistes|length }})</h5>
+{% for perso in culturistes %}
+{% id_perso perso %}
+{% endfor %}
+</fieldset>
+{% endif %}
+{% endwith %}
 <div style="clear:both"></div>
 <h5>Lieux</h5>
 {% for lieu in original.lieux %}

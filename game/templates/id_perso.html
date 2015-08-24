@@ -1,6 +1,6 @@
 {% if perso %}
     <div class="id_perso" style="float:left; border: 1px solid gray; margin: 0 10px; padding: 0 10px; width: 350px">
-        <h1 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><small><a href="/admin/game/perso/{{ perso.pk }}">{{ perso.nom }}</a>, {{ perso.sexe }}<small title="{{ perso.position }}">{% if perso.position %}, {{ perso.position }}{% endif %}</small></small>{% if perso.culture %}, <img src="/media/{{ perso.culture.avatar }}" width="24" height="24" title="{{ perso.culture.nom }}"/>{% endif %}</h1>
+        <h1 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-height: 1.5em"><small><a href="/admin/game/perso/{{ perso.pk }}">{{ perso.nom }}</a>, {{ perso.sexe }}<small title="{{ perso.position }}">{% if perso.position %}, {{ perso.position }}{% endif %}</small></small>{% if perso.culture %}, <a href="/admin/game/clan/{{ perso.culture.pk }}"><img src="/media/{{ perso.culture.avatar }}" width="24" height="24" title="{{ perso.culture.nom }}"/></a>{% endif %}</h1>
         {% if perso.avatar %}
             <div style="float:left; position:relative; left: 115px;">
                 <a href="/admin/game/clan/{{ perso.clan.pk }}"><img src="/media/{{ perso.clan.avatar }}" width="24" height="24" title="{{ perso.clan.nom }}"/></a><br />

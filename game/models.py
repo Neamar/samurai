@@ -93,6 +93,8 @@ class Clan(models.Model):
     def lieux(self):
         return Lieu.objects.filter(clan=self)
 
+    def culture(self):
+        return Perso.objects.filter(culture=self).order_by('-rang', '-age')
 
 @python_2_unicode_compatible
 class Lieu(models.Model):

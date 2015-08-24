@@ -6,7 +6,27 @@
 {{ media }}
 {% endblock %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />{% endblock %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
+
+<style type="text/css">
+
+h5 {
+    font-size: 20px;
+    border-bottom: 1 px solid black;
+    margin: 5px;
+}
+fieldset {
+    margin: 15px;
+    min-height: 195px;
+}
+
+.main {
+    margin: 15px;
+    font-size: 30px
+}
+</style>
+
+{% endblock %}
 
 {% block coltype %}colM{% endblock %}
 
@@ -28,11 +48,18 @@
 
 {% block content %}
 <fieldset class="module">
-<h1>{{ original.nom }}, {{ original.sexe }}<small>, {{ original.position }}</small></h1>
+<h1 class="main">{{ original.nom }}, {{ original.sexe }}{% if original.position %}<small>, {{ original.position }}</small>{% endif %}</h1>
 
-<img src="/media/{{ original.avatar }}" style="float:left; margin: 0 25px"/>
-<p style="float: left">
-    Âge : {{ original.age }}<br />
+<img src="/media/{{ original.avatar }}" style="float:left; margin: 20px"/>
+<p style="float: left; margin-top: 20px">
+    Âge :
+        {% if original.age == "1" %}Adolescent{%endif %}
+        {% if original.age == "2" %}Jeune adulte{%endif %}
+        {% if original.age == "3" %}Fleur de l'âge{%endif %}
+        {% if original.age == "4" %}Âge mur{%endif %}
+        {% if original.age == "5" %}Vieillard{%endif %}
+        ({{ original.age }})
+    <br />
     Rang : {{ original.rang }}<br />
     Naissance : {{ original.naissance }}<br />
 </p>
@@ -68,44 +95,56 @@
 
 <hr />
 {% if original.pere %}
-<h5>Père, mère</h5>
-{% id_perso original.pere %}
-{% id_perso original.pere.femme %}
-{% endif %}
+<fieldset>
+    <h5>Père, mère</h5>
+    {% id_perso original.pere %}
+    {% id_perso original.pere.femme %}
+    {% endif %}
+</fieldset>
 
 <div style="clear:both"></div>
-<h5>Conjoint</h5>
-{% if original.sexe == "H" %}
-    {% id_perso original.femme %}
-{% else %}
-    {% for mari in original.mari %}
-    {% id_perso mari %}
+<fieldset>
+    <h5>Conjoint</h5>
+    {% if original.sexe == "H" %}
+        {% id_perso original.femme %}
+    {% else %}
+        {% for mari in original.mari %}
+        {% id_perso mari %}
+        {% endfor %}
+    {% endif %}
+</fieldset>
+
+<div style="clear:both"></div>
+<fieldset>
+    <h5>Enfants</h5>
+    {% for enfant in original.enfants %}
+    {% id_perso enfant %}
     {% endfor %}
-{% endif %}
-<div style="clear:both"></div>
-<h5>Enfants</h5>
-{% for enfant in original.enfants %}
-{% id_perso enfant %}
-{% endfor %}
+</fieldset>
 
 <div style="clear:both"></div>
+<fieldset>
 <h5>Frères et sœurs</h5>
 {% for enfant in original.siblings %}
 {% id_perso enfant %}
 {% endfor %}
+</fieldset>
 
 <hr />
 
 <div style="clear:both"></div>
+<fieldset>
 <h5>Suzerain</h5>
 {% id_perso original.suzerain %}
+</fieldset>
 
 <div style="clear:both"></div>
+<fieldset>
 <h5>Vassaux</h5>
 {% for vassal in original.vassaux %}
 {% id_perso vassal %}
 {% endfor %}
-
+</fieldset>
 
 </fieldset>
 <div id="content-main">

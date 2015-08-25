@@ -95,6 +95,7 @@ class Clan(models.Model):
     def culturistes(self):
         return Perso.objects.filter(culture=self).order_by('-rang', '-age')
 
+
 @python_2_unicode_compatible
 class Lieu(models.Model):
     class Meta:
@@ -121,15 +122,19 @@ class Lieu(models.Model):
         return Perso.objects.filter(residence=self).order_by('-rang', '-age')
 
 
+@python_2_unicode_compatible
 class Change(models.Model):
     perso = models.ForeignKey("perso")
-    description = models.TextField()
+    description = models.TextField(editable=False)
     date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.description
 
 
 @receiver(post_save, sender=Perso)
 def handle_post_save(sender, instance, **kwargs):
     changes = Change(perso=instance)
     for key in instance.get_dirty_fields().keys():
-        changes.description += "%s : %s" % (key, getattr(instance, key))
+        changes.description += "%s : %s\n" % (key, getattr(instance, key))
     changes.save()

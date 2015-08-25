@@ -3,6 +3,12 @@ from django.contrib import admin
 from game.models import Perso, Clan, Lieu, Change
 
 
+class ChangesInline(admin.TabularInline):
+    model = Change
+    # exclude = ('secrets',)
+    extra = 0
+
+
 @admin.register(Perso)
 class PersoAdmin(admin.ModelAdmin):
     change_form_template = 'change_form_perso.html'
@@ -36,6 +42,7 @@ class PersoAdmin(admin.ModelAdmin):
     img.description = "Avatar"
     img.allow_tags = True
 
+    inlines = [ChangesInline]
 
 @admin.register(Clan)
 class ClanAdmin(admin.ModelAdmin):
@@ -48,7 +55,7 @@ class ClanAdmin(admin.ModelAdmin):
 
     def img(self, clan):
         if clan.avatar:
-            return u"<img src=\"/media/%s\" />" % clan.avatar
+            return u"<img src=\"/media/%s\" width='48' height='48'/>" % clan.avatar
         else:
             return False
     img.description = "Avatar"
@@ -59,10 +66,15 @@ class ClanAdmin(admin.ModelAdmin):
 
 @admin.register(Lieu)
 class LieuAdmin(admin.ModelAdmin):
+    list_filter = (
+        ('lieu', admin.RelatedOnlyFieldListFilter),
+        ('clan', admin.RelatedOnlyFieldListFilter),
+    )
+
     change_form_template = 'change_form_lieu.html'
 
     search_fields = ('nom',)
-    list_display = ('nom', 'img')
+    list_display = ('nom', 'img', 'clan')
 
     def img(self, lieu):
         if lieu.image:

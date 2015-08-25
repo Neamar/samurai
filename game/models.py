@@ -45,8 +45,6 @@ class Perso(DirtyFieldsMixin, models.Model):
     residence = models.ForeignKey("Lieu", blank=True, null=True)
     occupation = models.TextField(blank=True, null=True)
     naissance = models.CharField(max_length=200, blank=True, null=True)
-    secret_1 = models.TextField(blank=True, null=True)
-    secret_2 = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     factions = models.ManyToManyField("Clan", related_name="+", blank=True)
 
@@ -80,6 +78,8 @@ class Clan(models.Model):
     culture = models.ForeignKey("self", related_name="+", blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     tresorerie = models.IntegerField(default=0)
+    richesse = models.CharField(max_length=200, blank=True, null=True)
+    militaire = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.nom
@@ -93,7 +93,7 @@ class Clan(models.Model):
     def lieux(self):
         return Lieu.objects.filter(clan=self)
 
-    def culture(self):
+    def culturistes(self):
         return Perso.objects.filter(culture=self).order_by('-rang', '-age')
 
 @python_2_unicode_compatible

@@ -26,7 +26,7 @@ class PersoAdmin(admin.ModelAdmin):
     save_on_top = True
     search_fields = ('nom', 'clan__nom')
     ordering = ("nom",)
-    list_display = ('nom', 'sexe', 'clan', 'img')
+    list_display = ('nom', 'sexe', 'description', 'rang', 'clan', 'img')
 
     def img(self, perso):
         if perso.avatar:
@@ -44,7 +44,7 @@ class ClanAdmin(admin.ModelAdmin):
     )
 
     change_form_template = 'change_form_clan.html'
-    list_display = ('nom', 'img')
+    list_display = ('nom', 'img', "richesse", "militaire")
 
     def img(self, clan):
         if clan.avatar:

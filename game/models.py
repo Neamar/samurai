@@ -77,9 +77,8 @@ class Clan(models.Model):
     leader = models.ForeignKey("Perso", related_name="+", blank=True, null=True)
     culture = models.ForeignKey("self", related_name="+", blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    tresorerie = models.IntegerField(default=0)
     richesse = models.CharField(max_length=200, blank=True, null=True)
-    militaire = models.CharField(max_length=200, blank=True, null=True)
+    militaire = models.IntegerField(default=0)
 
     def __str__(self):
         return self.nom

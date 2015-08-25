@@ -1,10 +1,11 @@
 {% if lieu %}
     <div class="id_lieu" style="float:left; border: 1px solid gray; margin: 0 10px; padding: 0 10px; width: 400px">
-        <h1><small><a href="/admin/game/lieu/{{ lieu.pk }}">{{ lieu.nom }}</a>{% if lieu.type %}, {{ lieu.type }}{% endif %}</small>{% if lieu.clan %}, <img src="/media/{{ lieu.clan.avatar }}" width="24" height="24" title="{{lieu.clan.nom }}"/></a>{% endif %}</h1>
+        <h1><small><a href="/admin/game/lieu/{{ lieu.pk }}">{{ lieu.nom }}</a>{% if lieu.type %}, {{ lieu.type }}{% endif %}</small>{% if lieu.clan %}, <a href="/admin/game/clan/{{ lieu.clan.pk }}"><img src="/media/{{ lieu.clan.avatar }}" width="24" height="24" title="{{lieu.clan.nom }}"/></a>{% endif %}</h1>
 
         {% if lieu.image %}
-	        <a href="/admin/game/clan/{{ lieu.clan.pk }}">
-	        <img src="/media/{{ lieu.image }}" style="margin: 0 25px"/>
+        <a href="/admin/game/lieu/{{ lieu.pk }}">
+        	<img src="/media/{{ lieu.image }}" style="margin: 0 25px"/>
+        </a>
         {% endif %}
     </div>
 {% endif %}

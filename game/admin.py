@@ -12,15 +12,6 @@ class ChangesInline(admin.TabularInline):
 @admin.register(Perso)
 class PersoAdmin(admin.ModelAdmin):
     change_form_template = 'change_form_perso.html'
-    # fieldsets = (
-    #     (None, {
-    #         "fields": [f for f in Perso._meta.get_all_field_names() if f != "notes_mj"]
-    #     }),
-    #     ('Notes MJ', {
-    #         'classes': ('collapse',),
-    #         'fields': ('notes_mj',)
-    #     }),
-    # )
     list_filter = (
         'sexe',
         ('clan', admin.RelatedOnlyFieldListFilter),
@@ -74,7 +65,7 @@ class LieuAdmin(admin.ModelAdmin):
     change_form_template = 'change_form_lieu.html'
 
     search_fields = ('nom',)
-    list_display = ('nom', 'img', 'clan')
+    list_display = ('nom', 'img', 'clan', 'lieu')
 
     def img(self, lieu):
         if lieu.image:

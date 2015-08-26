@@ -135,6 +135,6 @@ class Change(models.Model):
 @receiver(post_save, sender=Perso)
 def handle_post_save(sender, instance, **kwargs):
     changes = Change(perso=instance)
-    for key in instance.get_dirty_fields().keys():
-        changes.description += "%s : %s\n" % (key, getattr(instance, key))
+    for key in instance.get_dirty_fields(True).keys():
+        changes.description += u"%s : %s\n" % (key, getattr(instance, key))
     changes.save()

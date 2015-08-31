@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.db.models import Q
 
 from game.dirty_fields import DirtyFieldsMixin
 
@@ -14,8 +16,8 @@ class Perso(DirtyFieldsMixin, models.Model):
     HOMME = "H"
     FEMME = "F"
     SEXE_CHOICES = (
-        (HOMME, "Homme"),
-        (FEMME, "Femme"),
+        (HOMME, "H ♂"),
+        (FEMME, "F ♀"),
     )
 
     nom = models.CharField(unique=True, max_length=200)
@@ -120,6 +122,9 @@ class Lieu(models.Model):
 
     def residents(self):
         return Perso.objects.filter(residence=self).order_by('-rang', '-age')
+
+    def subresidents(self):
+        return Perso.objects.filter(Q(residence__lieu=self) | Q(residence__lieu__lieu=self) | Q(residence__lieu__lieu__lieu=self) | Q(residence__lieu__lieu__lieu__lieu=self)).order_by('-rang', '-age')
 
 
 @python_2_unicode_compatible

@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from game.models import Perso, Clan, Lieu, Change
+from django.template.loader import get_template
 
 
 class ChangesInline(admin.TabularInline):
@@ -23,20 +24,34 @@ class PersoAdmin(admin.ModelAdmin):
     save_on_top = True
     search_fields = ('nom', 'clan__nom')
     ordering = ("nom",)
-    list_display = ('nom', 'sexe', 'description', 'rang', 'clan', 'img')
+
+    list_display = ('nom', 'sexe', 'details', 'rang', 'clan', 'img', "residence")
 
     def img(self, perso):
         if perso.avatar:
-            return u"<img src=\"/media/%s\" />" % perso.avatar
+            return u"<img src=\"/media/%s\" width=60 height=60 />" % perso.avatar
         else:
             return False
     img.description = "Avatar"
     img.allow_tags = True
 
+    def details(self, perso):
+        det = (
+            ("D:", perso.description),
+            ("O:", perso.occupation),
+            ("P:", perso.position),
+
+        )
+        return "<br>".join("<b>%s</b> : %s" % (k, v) for k, v in det if v != "")
+    details.allow_tags = True
+
+
     inlines = [ChangesInline]
 
 @admin.register(Clan)
 class ClanAdmin(admin.ModelAdmin):
+    search_fields = ('nom,',)
+
     list_filter = (
         ('culture', admin.RelatedOnlyFieldListFilter),
     )
@@ -62,6 +77,16 @@ class LieuAdmin(admin.ModelAdmin):
         ('clan', admin.RelatedOnlyFieldListFilter),
     )
 
+    fieldsets = (
+        (None, {
+            "fields": ('nom', 'type', 'image', 'chef', 'lieu', 'clan')
+        }),
+        ('Autres', {
+            'classes': ('collapse',),
+            'fields': ('image_large', 'description')
+        }),
+    )
+
     change_form_template = 'change_form_lieu.html'
 
     search_fields = ('nom',)
@@ -69,7 +94,7 @@ class LieuAdmin(admin.ModelAdmin):
 
     def img(self, lieu):
         if lieu.image:
-            return u"<img src=\"/media/%s\" />" % lieu.image
+            return u"<img src=\"/media/%s\" width='60' height='60'/>" % lieu.image
         else:
             return False
     img.description = "Avatar"
@@ -78,10 +103,30 @@ class LieuAdmin(admin.ModelAdmin):
     ordering = ("nom",)
 
 
+template = get_template('id_perso.html')
+
 
 @admin.register(Change)
 class ChangeAdmin(admin.ModelAdmin):
     search_fields = ('perso__nom, description',)
-    list_display = ('perso', 'description')
+    list_display = ('pk', 'personnage', 'clan', 'desc')
+
+    def personnage(self, change):
+        return template.render({"perso": change.perso})
+
+        # return u"<a href=\"/admin/game/perso/%s\">%s</a>" % (change.perso.pk, change.perso)
+    personnage.allow_tags = True
+
+    def clan(self, change):
+        return "<img title='%s' src='/media/%s' width=40 height=40 />" % (change.perso.clan, change.perso.clan.avatar if change.perso.clan else "")
+
+    clan.allow_tags = True
+
+    def desc(self, change):
+        try:
+            return "<br>".join(["<b>%s</b>: %s" % (key, value) for key, value in [atomic.split(":") for atomic in change.description.strip().split("\n")]])
+        except:
+            return change.description.replace("\n", "<br>")
+    desc.allow_tags = True
 
     ordering = ("-date",)

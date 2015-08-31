@@ -64,10 +64,29 @@
 {% id_perso original.chef %}
 
 <div style="clear:both"></div>
+{% with original.residents as residents %}
+{% if residents|length > 0 %}
 <h5>Résidents</h5>
-{% for perso in original.residents %}
+{% for perso in residents %}
 {% id_perso perso %}
 {% endfor %}
+{% endif %}
+{% endwith %}
+
+<div style="clear:both"></div>
+{% with original.subresidents as subresidents %}
+
+{% if subresidents|length > 0 %}
+<fieldset class="module aligned collapse">
+<h2>Résidents indirects ({{ subresidents|length}})</h2>
+{% for perso in subresidents %}
+{% id_perso perso %}
+{% endfor %}
+{% endif %}
+</fieldset>
+{% endwith %}
+
+
 </fieldset>
 <div id="content-main">
 {% block object-tools %}

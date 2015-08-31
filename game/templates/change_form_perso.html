@@ -64,7 +64,7 @@ fieldset {
     Naissance : {{ original.naissance }}<br />
 </p>
 
-<table>
+<table style="float:left">
 <tr>
     <td>Clan</td>
     <td><a href="/admin/game/clan/{{ original.clan.pk }}"><img src="/media/{{ original.clan.avatar }}" width="24" height="24" /></a></td>
@@ -82,17 +82,17 @@ fieldset {
 </tr>
 </table>
 
+<p><b>Description</b> : {{ original.description }}<br>
+{{ original.occupation }}</p>
+
 <div style="clear:both"></div>
 
 <div style="float: left;">
 {% id_lieu original.residence %}
 </div>
 
-<p>{{ original.occupation }}</p>
 
 <div style="clear:both"></div>
-<p>{{ original.description }}
-
 <hr />
 {% if original.pere %}
 <fieldset>
